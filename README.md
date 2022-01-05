@@ -11,5 +11,5 @@ OWM_TOKEN=your_openweathermap_token
 ## Build
 
 ```bash
-go build
+$ go build
 ```
