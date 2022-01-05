@@ -16,7 +16,7 @@ import (
 
 const (
 	T_API string = "https://api.telegram.org/bot"
-	W_API string = "https://api.openweathermap.org/data/2.5/"
+	W_API string = "https://api.openweathermap.org/data/2.5"
 )
 
 func init() {
@@ -64,10 +64,7 @@ func GetUpdates(URL string, OFFSET int) (updates []Update, err error) {
 	}
 
 	response := new(Response)
-	err = json.Unmarshal(body, &response)
-	if err != nil {
-		return
-	}
+	json.Unmarshal(body, &response)
 
 	updates = response.Result
 
@@ -96,15 +93,20 @@ func Reply(URL string, update Update, OWM_TOKEN string) (err error) {
 	replyMessage := new(ReplyMessage)
 	replyMessage.ChatID = update.Message.Chat.ID
 
-	resp, err := http.Get(W_API + "weather?q=" + update.Message.Text + "&appid=" + OWM_TOKEN)
-	if err != nil {
-		return
-	}
-	defer resp.Body.Close()
+	switch update.Message.Text {
+	case "/start", "/help":
+		replyMessage.Text = fmt.Sprintln("This is a Weather Bot\n\nEnter the city name to see the weather forecast")
+	default:
+		resp, r_err := http.Get(W_API + "/weather?q=" + update.Message.Text + "&appid=" + OWM_TOKEN)
+		if r_err != nil {
+			return
+		}
+		defer resp.Body.Close()
 
-	replyMessage.Text, err = GetReplyData(resp)
-	if err != nil {
-		return
+		replyMessage.Text, err = GetReplyData(resp)
+		if err != nil {
+			return
+		}
 	}
 
 	buffer, _ := json.Marshal(replyMessage)
