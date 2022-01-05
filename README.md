@@ -3,7 +3,7 @@
 ## Setup
 
 Copy token from BotFather and OpenWeatherMap to `.env` file
-```dotenv
+```dosini
 BOT_TOKEN=your_bot_token
 OWM_TOKEN=your_openweathermap_token
 ```
