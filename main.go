@@ -95,7 +95,7 @@ func Reply(URL string, update Update, OWM_TOKEN string) (err error) {
 
 	switch update.Message.Text {
 	case "/start", "/help":
-		replyMessage.Text = fmt.Sprintln("This is a Weather Bot\n\nEnter the city name to see the weather forecast")
+		replyMessage.Text = fmt.Sprintln("Weather Bot\n\nEnter the city name to see the weather forecast")
 	default:
 		resp, r_err := http.Get(W_API + "/weather?q=" + update.Message.Text + "&appid=" + OWM_TOKEN)
 		if r_err != nil {
