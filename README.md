@@ -13,3 +13,7 @@ OWM_TOKEN=your_openweathermap_token
 ```bash
 go build
 ```
+
+## Screenshots
+
+![](/screenshots/weather_bot.png)
