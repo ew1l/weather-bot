@@ -22,4 +22,4 @@ go build
 
 ## Screenshots
 
-![](/screenshots/weather_bot.png)
+![weather_bot](https://user-images.githubusercontent.com/34972940/152611814-cdde8a71-6583-4732-a619-d2938a29ca01.png)
