@@ -64,7 +64,10 @@ func (wb *WeatherBot) GetUpdates() ([]Update, error) {
 	}
 
 	response := new(Response)
-	json.Unmarshal(body, &response)
+	if err := json.Unmarshal(body, &response); err != nil {
+		return nil, err
+	}
+
 	updates := response.Result
 
 	return updates, nil
