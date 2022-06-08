@@ -8,16 +8,10 @@ BOT_TOKEN=your_bot_token
 OWM_TOKEN=your_openweathermap_token
 ```
 
-## Build
-
-```bash
-go build
-```
-
 ## Run
 
 ```bash
-./weather-bot
+go run -mod=vendor cmd/main.go
 ```
 
 ## Screenshots
