@@ -20,21 +20,20 @@ const (
 var OpenWeatherMapToken string
 
 type WeatherBot struct {
-	URL    string
-	Offset int
+	URL string
 }
 
 func New() *WeatherBot {
 	OpenWeatherMapToken = os.Getenv("OWM_TOKEN")
 	return &WeatherBot{
-		URL:    TelegramAPI + os.Getenv("BOT_TOKEN"),
-		Offset: 0,
+		URL: TelegramAPI + os.Getenv("BOT_TOKEN"),
 	}
 }
 
 func (wb *WeatherBot) Start() {
+	offset := 0
 	for {
-		updates, err := wb.GetUpdates()
+		updates, err := wb.GetUpdates(offset)
 		if err != nil {
 			log.Println(err)
 		}
@@ -46,13 +45,13 @@ func (wb *WeatherBot) Start() {
 				log.Println(err)
 			}
 
-			wb.Offset = update.UpdateID + 1
+			offset = update.UpdateID + 1
 		}
 	}
 }
 
-func (wb *WeatherBot) GetUpdates() ([]Update, error) {
-	resp, err := http.Get(wb.URL + "/getUpdates" + "?offset=" + strconv.Itoa(wb.Offset))
+func (wb *WeatherBot) GetUpdates(offset int) ([]Update, error) {
+	resp, err := http.Get(wb.URL + "/getUpdates" + "?offset=" + strconv.Itoa(offset))
 	if err != nil {
 		return nil, err
 	}
